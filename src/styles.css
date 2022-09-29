@@ -1,1 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    height: 100%;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    --btn-hover: #c6c2ca;
+    --btn-click: grey;
+    --txt-color: black;
+    --nav-color: white;
+    --text-color: black;
+    --bkg-color: rgb(196, 196, 196);
+    --btn-txt-color: black;
+    --btn-bg-color: #e6e3e8;
+    --div-color: rgb(54, 54, 54);
+    --btn-border-color: black;
+    --disp-color: white;
+}
+
+body.dark-theme {
+    --btn-hover: #212121;
+    --btn-click: black;
+    --txt-color: white;
+    --nav-color: black;
+    --text-color: #eee;
+    --bkg-color: #212121;
+    --btn-txt-color: white;
+    --btn-bg-color: #424242;
+    --div-color: #303030;
+    --btn-border-color: #303030;
+    --disp-color: #484848;
+
+}
