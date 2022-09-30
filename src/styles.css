@@ -2,6 +2,8 @@
 body {
     height: 100%;
     width: 100%;
+    /* Das ist gut. Wenn es auf dem System kein Arial oder Helvetica gibt, fällt es zurück auf irgeneine seriefenlose Schriftart. */
+
     font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
     padding: 0px;

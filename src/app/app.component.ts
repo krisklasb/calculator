@@ -6,7 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  // Die Komponente würde man CalculatorComponent nennen (und alle Dateien dazu entsprechend)
+  // Außerdem solltest du unbedingt ne Validierung einführen, dass man keinen Quatsch (z.B. 1 + + 1) eingeben kann.
+  // Interessant wäre es auch Mal eine andere Implementierung dagegenzuhalten, jetzt wo du fertig bist (z.B. https://www.tektutorialshub.com/angular/angular-calculator-application/ oder https://www.techiediaries.com/angular/angular-9-tutorial-and-example/ oder https://stackblitz.com/edit/ng-calculator oder https://stackblitz.com/edit/angular-basic-calculator?file=src%2Fapp%2Fapp.component.ts)
 
+
+  // Properties immer möglichst selbstsprechend. Was ist z.B. a oder b? Musst auch nicht viel abkürzen dabei. Und immer kleingeschrieben und camelCase.
   title = 'Calculator';
   myName = 'Kristian';
   display = '';
@@ -22,6 +27,9 @@ export class AppComponent {
   b = '';
   finalResult = 0;
   resultDis = '';
+
+  // Der Name passt nicht gut. Besser du machst einzelne Methoden für die Operationen, z.B. add, multiply, ... Unter der Haube kannst du dann "chache" (oder besser "store") nutzen.
+  // Außerdem ist das schwer zu testen mit Unit-Tests, weil die Methode so groß ist und so viele Möglichkeiten hat, durchlaufen zu werden (zyklomatische Komplexität).
 
   cache(input: any) {
 
@@ -75,6 +83,8 @@ export class AppComponent {
     }
   }
 
+  // Der Name passt auch nicht gut. Eigentlich machst du hier zwei Dinge: store und calculate
+
   StrArr(input: any) {
     this.cacheArr = this.cacheArr.concat(this.saveNum);
     this.cache2 = this.cache2 + this.saveNum;
@@ -84,7 +94,7 @@ export class AppComponent {
     this.result2();
     return this.displaySmall;
   }
-
+  // Und das ist calculate
   result() {
     if (this.cacheArr.length >= 3) {
       for (var i = 0; i < this.cacheArr.length; i++) {
@@ -110,6 +120,7 @@ export class AppComponent {
     }
     return this.cacheArr
   }
+  // Warum trennst du result (* und /) und result2 (+ und -)? Wären dann nicht andere Methodennamen besser?
   result2() {
     if (this.cacheArr.length >= 3) {
       for (var i = 0; i < this.cacheArr.length; i++) {
@@ -137,7 +148,8 @@ export class AppComponent {
     this.display = this.resultDis;
     return this.display;
   }
-
+  /* Nicht mit Globalen Variablen arbeiten */
+  //Wegen Rundung schauen 0,1 + 0,2
   mul(multsymbol: any) {
 
     this.finalResult = parseFloat(this.a) * parseFloat(this.b);

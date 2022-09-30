@@ -1,3 +1,35 @@
+/* Grundsätzlich ist es wichtig auch bei CSS eine gewisse "Architektur" einzuhalten, weil man sonst den Überblick und die Kontrolle verliert. */
+/* Früher tendierte man dazu alles in eine große Datei zu packen. Das war die Hölle, was Pflege angeht. Deswegen sollte man sich mit CSS-Architektur beschäftigen, z.B. https://snipcart.com/blog/organize-css-modular-architecture. */
+/* Jetzt gibt es z.B. Angular, wo man auch Komponentenweise CSS erstellt. Das ist besser, aber natürlich gibt es auch noch übergreifendes CSS. Siehe dafür https://angular.io/guide/component-styles, https://medium.com/@kmathy/angular-tips-and-tricks-for-css-structure-cb73fa50f0e8 (keine Ahnung ob das so roichtig ist, aber klingt gut) oder https://www.infoq.com/news/2019/12/components-css-architecture/ */
+/* Außerdem hat man jetzt mit SASS oder SCSS mehr Möglichkeiten. Im Zweifel würde ich reines CSS gar nicht mehr einsetzen. Siehe https://www.pluralsight.com/guides/use-sass-less-or-css-within-your-angular-component-template */
+
+/* Um es simpel und konkret zu machen, würde ich die CSS folgendermaßen aufbauen:
+
+Global, z.B. Font
+
+:host {}
+body {}
+
+Elemente, z.B. h1, h2 und ggf. ihre Ableitungen mit Klassen, z.B.:
+
+button {}
+button:hover {}
+button.clear {}
+...
+
+Komponenten, z.B. .display und alle Elemente dort drin
+
+.display {}
+.display .last {}
+.display .current {}
+.display button {} // z.B.
+
+*/
+
+
+/* Die beiden könnte man zusammenfassen. Außerdem würde ich versuchen Farben einheiltich mit Hex-Werten (z.B. #000000) darzustellen und  nicht zu mischen. */
+
+
 h2 {
     color: var(--text-color);
 }
@@ -21,6 +53,8 @@ p {
     color: var(--txt-color);
 }
 
+/* Mach dich Mal schlau bei den Maßeinheiten. Du verwendest absolute (px) und relative Werte (vh, %). Tendenziell geht die Empfehlung hin zu relativen WErten, vor allem wg Responsive-Design. */
+
 
 section {
     height: 93.41vh;
@@ -43,6 +77,8 @@ section {
 button {
     width: 90px;
     height: 70px;
+    /* Mit SASS oder SCSS kannst du Variablen definieren für so was und die wiederverwenden. */
+
     background-color: var(--btn-bg-color);
     color: var(--btn-txt-color);
     font-size: 3vh;
@@ -58,6 +94,8 @@ button:active {
     background: var(--btn-click);
 }
 
+/* Hier könntest du auch button.clear verwenden, als <button class=clear>... Das ist eleganter. */
+
 .clearbutton {
     width: 180px;
     border-top-left-radius: 10px;
@@ -68,6 +106,8 @@ button:active {
     border-top-right-radius: 10px;
 }
 
+/* Man tendiert dazu Klassen semantisch zu benennen und nicht nach ihren Werten, weil die sich ändern können. Das Bsp passt hier vllt nicht, aber z.B. bei einem Button wäre button.main besser als button.blue, falls sich die Farbe Mal ändert. */
+
 .bottomright {
     border-bottom-right-radius: 10px;
 }
@@ -76,10 +116,14 @@ button:active {
     border-bottom-left-radius: 10px;
 }
 
+/* Div ist sehr allgemein. Würde man so nicht machen. */
+
 div {
     width: 360px;
     background-color: var(--div-color);
 }
+
+/* Hier hast du Dublikate, die du mit .display und display.small verhindern könntest. Oder halt mit Verschachtelung, wenn du SASS/SCSS nutzt. */
 
 .display {
     width: 360px;

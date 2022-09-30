@@ -2,8 +2,13 @@
   <p>calculator</p>
   <button class="theme" (click)="toggleDarkTheme()">Switch theme</button>
 </div>
+<!-- Bei HTML versucht man so semantisch wie möglich zu sein, also das passende HTML-Element zu verwenden und ggf. mit semantischen Klassen zu ergänzen -->
+
+<!-- section passt ggf. hier semnatisch nicht unbedingt. Im Zweifel (wenn es keine sematische Bedeutung hat) einfach div (block) oder span (inline) -->
 <section>
+  <!-- Element div ist gut, aber ich würde die Klasse z.B. outline nennen. Border beschreibt das Aussehen, du willst aber unabhängig davon sein -->
   <div class="borderall">
+    <!-- Hier würde ich als Klasse display und darunter z.B. last und current nehmen. h5 und h2 passen hier nicht so gut, kannst du auch weglassen. Sind ja keine Überschriften semantisch.  -->
     <div class="borderdisplay">
       <div class="displaySmall">
         <h5>{{displaySmall}}</h5>
@@ -12,9 +17,11 @@
         <h2>{{display}}</h2>
       </div>
     </div>
+    <!-- Besser button.clear, button.delete usw... -->
 
     <button class="clearbutton" (click)="clear('C')">C</button>
     <button class="deletebutton" (click)=" delete('DEL')">DEL</button>
+    <!-- Statt cache wäre hier input als Methode besser -->
 
     <button (click)="cache('7')">7</button>
     <button (click)="cache('8')">8</button>
@@ -30,9 +37,12 @@
     <button (click)="cache('2')">2</button>
     <button (click)="cache('3')">3</button>
     <button (click)="cache('-')">-</button>
+    <!-- Besser button.dot, button.add -->
 
     <button class="bottomleft" (click)="cache('.')">.</button>
     <button (click)="cache('0')">0</button>
+    <!-- Und hier vllt auch input oder calculate? -->
+
     <button (click)="StrArr('=')">=</button>
     <button class="bottomright" (click)="cache('+')">+</button>
   </div>
