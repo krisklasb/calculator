@@ -1,22 +1,21 @@
 <header>
   <span class="title">Calculator</span>
-  <button class="buttonTheme" (click)="toggleDarkTheme()">Switch theme</button>
+  <button (click)="toggleDarkTheme()" class="theme">Switch theme</button>
 </header>
 
-<body>
-  <div class="calculator">
+<main>
+  <div class=" calculator">
     <div class="display">
       <div class="displayTop">
-        <span>{{displaySmall}}</span>
+        <span class="small">{{displaySmall}}</span>
       </div>
       <div class=displayBottom>
-        <span>{{display}}</span>
+        <span class="big">{{display}}</span>
       </div>
     </div>
 
-
-    <button (click)="clear()" class="buttonClear">C</button>
-    <button (click)=" delete()" class="buttonDelete">DEL</button>
+    <button (click)="clear()" class="clear">C</button>
+    <button (click)=" delete()" class="delete">DEL</button>
 
     <button (click)="input('7')">7</button>
     <button (click)="input('8')">8</button>
@@ -33,9 +32,9 @@
     <button (click)="input('3')">3</button>
     <button (click)="input('-')">-</button>
 
-    <button (click)="input('.')" class="buttonDot">.</button>
+    <button (click)="input('.')" class="dot">.</button>
     <button (click)="input('0')">0</button>
-    <button (click)="calculate()">=</button>
-    <button (click)="input('+')" class="buttonPlus">+</button>
+    <button (click)="result()">=</button>
+    <button (click)="input('+')" class="plus">+</button>
   </div>
-</body>
+</main>

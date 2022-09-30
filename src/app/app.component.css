@@ -39,15 +39,12 @@ header {
 }
 
 .title {
-    display: inline-block;
-    margin: 20px;
     color: var(--txt-color);
 }
 
 /* Mach dich Mal schlau bei den Maßeinheiten. Du verwendest absolute (px) und relative Werte (vh, %). Tendenziell geht die Empfehlung hin zu relativen WErten, vor allem wg Responsive-Design. */
 
-
-body {
+main {
     height: 93.41vh;
     display: flex;
     align-items: center;
@@ -55,7 +52,7 @@ body {
     background: var(--bkg-color);
 }
 
-.buttonTheme {
+button.theme {
     width: 60px;
     height: 35px;
     font-size: 12px;
@@ -65,16 +62,17 @@ body {
     border-color: var(--btn-border-color);
 }
 
+button.theme:active {
+    box-shadow: 2px 2px 5px grey;
+}
+
 button {
     width: 90px;
     height: 70px;
-    /* Mit SASS oder SCSS kannst du Variablen definieren für so was und die wiederverwenden. */
-
     background-color: var(--btn-bg-color);
     color: var(--btn-txt-color);
     font-size: 3vh;
     border: 1px solid var(--btn-border-color);
-
 }
 
 button:hover {
@@ -85,25 +83,21 @@ button:active {
     background: var(--btn-click);
 }
 
-/* Hier könntest du auch button.clear verwenden, als <button class=clear>... Das ist eleganter. */
-
-.buttonClear {
+button.clear {
     width: 180px;
     border-top-left-radius: 10px;
 }
 
-.buttonDelete {
+button.delete {
     width: 180px;
     border-top-right-radius: 10px;
 }
 
-/* Man tendiert dazu Klassen semantisch zu benennen und nicht nach ihren Werten, weil die sich ändern können. Das Bsp passt hier vllt nicht, aber z.B. bei einem Button wäre button.main besser als button.blue, falls sich die Farbe Mal ändert. */
-
-.buttonPlus {
+button.plus {
     border-bottom-right-radius: 10px;
 }
 
-.buttonDot {
+button.dot {
     border-bottom-left-radius: 10px;
 }
 
@@ -116,6 +110,8 @@ button:active {
     height: 50px;
     background-color: var(--disp-color);
     color: var(--txt-color);
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .displayTop {
@@ -138,4 +134,14 @@ button:active {
     width: 360px;
     background-color: var(--div-color);
 
+}
+
+span.big {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+span.small {
+    font-size: 13px;
+    font-weight: bold;
 }
