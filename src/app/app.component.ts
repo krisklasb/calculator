@@ -31,7 +31,7 @@ export class AppComponent {
   // Der Name passt nicht gut. Besser du machst einzelne Methoden für die Operationen, z.B. add, multiply, ... Unter der Haube kannst du dann "chache" (oder besser "store") nutzen.
   // Außerdem ist das schwer zu testen mit Unit-Tests, weil die Methode so groß ist und so viele Möglichkeiten hat, durchlaufen zu werden (zyklomatische Komplexität).
 
-  cache(input: any) {
+  input(input: any) {
 
     if (input !== '-' && input !== '+' && input !== '/' && input !== '*') {
       this.saveNum = this.saveNum + input;
@@ -85,14 +85,13 @@ export class AppComponent {
 
   // Der Name passt auch nicht gut. Eigentlich machst du hier zwei Dinge: store und calculate
 
-  StrArr(input: any) {
+  calculate(): void {
     this.cacheArr = this.cacheArr.concat(this.saveNum);
     this.cache2 = this.cache2 + this.saveNum;
     this.saveNum = '';
     this.displaySmall = this.cache2;
     this.result();
     this.result2();
-    return this.displaySmall;
   }
   // Und das ist calculate
   result() {
@@ -171,20 +170,18 @@ export class AppComponent {
     return this.finalResult;
   }
 
-  clear(Cbutton: any) {
+  clear(): void {
     this.saveNum = '';
     this.display = '';
     this.displaySmall = '';
     this.cache2 = '';
     this.cacheArr = [];
     this.resultDis = '';
-    return this.display;
   }
 
-  delete(DELbutton: any) {
+  delete(): void {
     this.saveNum = this.saveNum.slice(0, -1);
     this.display = this.saveNum;
-    return this.saveNum;
   }
   toggleDarkTheme(): void {
     document.body.classList.toggle('dark-theme');

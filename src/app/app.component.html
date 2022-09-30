@@ -1,50 +1,41 @@
-<div class="nav">
-  <p>calculator</p>
-  <button class="theme" (click)="toggleDarkTheme()">Switch theme</button>
-</div>
-<!-- Bei HTML versucht man so semantisch wie möglich zu sein, also das passende HTML-Element zu verwenden und ggf. mit semantischen Klassen zu ergänzen -->
+<header>
+  <span class="title">Calculator</span>
+  <button class="buttonTheme" (click)="toggleDarkTheme()">Switch theme</button>
+</header>
 
-<!-- section passt ggf. hier semnatisch nicht unbedingt. Im Zweifel (wenn es keine sematische Bedeutung hat) einfach div (block) oder span (inline) -->
-<section>
-  <!-- Element div ist gut, aber ich würde die Klasse z.B. outline nennen. Border beschreibt das Aussehen, du willst aber unabhängig davon sein -->
-  <div class="borderall">
-    <!-- Hier würde ich als Klasse display und darunter z.B. last und current nehmen. h5 und h2 passen hier nicht so gut, kannst du auch weglassen. Sind ja keine Überschriften semantisch.  -->
-    <div class="borderdisplay">
-      <div class="displaySmall">
-        <h5>{{displaySmall}}</h5>
+<body>
+  <div class="calculator">
+    <div class="display">
+      <div class="displayTop">
+        <span>{{displaySmall}}</span>
       </div>
-      <div class=display>
-        <h2>{{display}}</h2>
+      <div class=displayBottom>
+        <span>{{display}}</span>
       </div>
     </div>
-    <!-- Besser button.clear, button.delete usw... -->
 
-    <button class="clearbutton" (click)="clear('C')">C</button>
-    <button class="deletebutton" (click)=" delete('DEL')">DEL</button>
-    <!-- Statt cache wäre hier input als Methode besser -->
 
-    <button (click)="cache('7')">7</button>
-    <button (click)="cache('8')">8</button>
-    <button (click)="cache('9')">9</button>
-    <button (click)="cache('/')">÷</button>
+    <button (click)="clear()" class="buttonClear">C</button>
+    <button (click)=" delete()" class="buttonDelete">DEL</button>
 
-    <button (click)="cache('4')">4</button>
-    <button (click)="cache('5')">5</button>
-    <button (click)="cache('6')">6</button>
-    <button (click)="cache('*')">×</button>
+    <button (click)="input('7')">7</button>
+    <button (click)="input('8')">8</button>
+    <button (click)="input('9')">9</button>
+    <button (click)="input('/')">÷</button>
 
-    <button (click)="cache('1')">1</button>
-    <button (click)="cache('2')">2</button>
-    <button (click)="cache('3')">3</button>
-    <button (click)="cache('-')">-</button>
-    <!-- Besser button.dot, button.add -->
+    <button (click)="input('4')">4</button>
+    <button (click)="input('5')">5</button>
+    <button (click)="input('6')">6</button>
+    <button (click)="input('*')">×</button>
 
-    <button class="bottomleft" (click)="cache('.')">.</button>
-    <button (click)="cache('0')">0</button>
-    <!-- Und hier vllt auch input oder calculate? -->
+    <button (click)="input('1')">1</button>
+    <button (click)="input('2')">2</button>
+    <button (click)="input('3')">3</button>
+    <button (click)="input('-')">-</button>
 
-    <button (click)="StrArr('=')">=</button>
-    <button class="bottomright" (click)="cache('+')">+</button>
+    <button (click)="input('.')" class="buttonDot">.</button>
+    <button (click)="input('0')">0</button>
+    <button (click)="calculate()">=</button>
+    <button (click)="input('+')" class="buttonPlus">+</button>
   </div>
-
-</section>
+</body>
