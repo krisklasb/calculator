@@ -139,9 +139,11 @@ button.dot {
 span.big {
     font-size: 30px;
     font-weight: bold;
+    margin: 10px;
 }
 
 span.small {
     font-size: 13px;
     font-weight: bold;
+    margin: 10px;
 }
