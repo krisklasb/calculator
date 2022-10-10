@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   // Die Komponente würde man CalculatorComponent nennen (und alle Dateien dazu entsprechend)
   // Außerdem solltest du unbedingt ne Validierung einführen, dass man keinen Quatsch (z.B. 1 + + 1) eingeben kann.
-  // Interessant wäre es auch Mal eine andere Implementierung dagegenzuhalten, jetzt wo du fertig bist (z.B. https://www.tektutorialshub.com/angular/angular-calculator-application/ oder https://www.techiediaries.com/angular/angular-9-tutorial-and-example/ oder https://stackblitz.com/edit/ng-calculator oder https://stackblitz.com/edit/angular-basic-calculator?file=src%2Fapp%2Fapp.component.ts)
 
 
   // Properties immer möglichst selbstsprechend. Was ist z.B. a oder b? Musst auch nicht viel abkürzen dabei. Und immer kleingeschrieben und camelCase.
@@ -19,9 +18,6 @@ export class AppComponent {
   cache2 = '';
   displaySmall = '';
   cacheArr: string[] = [];
-  a = '';
-  b = '';
-  finalResult = 0;
   resultDis = '';
 
   // Der Name passt nicht gut. Besser du machst einzelne Methoden für die Operationen, z.B. add, multiply, ... Unter der Haube kannst du dann "chache" (oder besser "store") nutzen.
@@ -29,10 +25,10 @@ export class AppComponent {
 
   input(input: any): void {
 
-    let Add: string[] = [];
-    let Sub: string[] = [];
-    let Mul: string[] = [];
-    let Div: string[] = [];
+    let Add: string[] = ['+'];
+    let Sub: string[] = ['-'];
+    let Mul: string[] = ['*'];
+    let Div: string[] = ['/'];
 
     if (input !== '-' && input !== '+' && input !== '/' && input !== '*') {
       this.saveNum = this.saveNum + input;
@@ -74,8 +70,6 @@ export class AppComponent {
     }
   }
 
-  // Der Name passt auch nicht gut. Eigentlich machst du hier zwei Dinge: store und calculate
-
   result(): void {
     this.cacheArr = this.cacheArr.concat(this.saveNum);
     this.cache2 = this.cache2 + this.saveNum;
@@ -85,24 +79,27 @@ export class AppComponent {
     this.CalcAddSub();
   }
   CalcMulDiv(): void {
+    let preOperand = '';
+    let afterOperand = '';
+    let miniResult = 0;
     if (this.cacheArr.length >= 3) {
       for (var i = 0; i < this.cacheArr.length; i++) {
         if (this.cacheArr[i] === '/') {
-          this.a = parseFloat(this.cacheArr[i - 1]).toFixed(7);
-          this.b = parseFloat(this.cacheArr[i + 1]).toFixed(7);
-          this.div('=');
+          preOperand = parseFloat(this.cacheArr[i - 1]).toFixed(7);
+          afterOperand = parseFloat(this.cacheArr[i + 1]).toFixed(7);
+          miniResult = this.div(preOperand, afterOperand);
           this.cacheArr.splice(i + 1, 1);
           this.cacheArr.splice(i, 1);
-          this.cacheArr.splice(i - 1, 1, this.finalResult.toString());
+          this.cacheArr.splice(i - 1, 1, miniResult.toString());
           this.CalcMulDiv();
         }
         else if (this.cacheArr[i] === '*') {
-          this.a = parseFloat(this.cacheArr[i - 1]).toFixed(7);
-          this.b = parseFloat(this.cacheArr[i + 1]).toFixed(7);
-          this.mul('=');
+          preOperand = parseFloat(this.cacheArr[i - 1]).toFixed(7);
+          afterOperand = parseFloat(this.cacheArr[i + 1]).toFixed(7);
+          miniResult = this.mul(preOperand, afterOperand);
           this.cacheArr.splice(i + 1, 1);
           this.cacheArr.splice(i, 1);
-          this.cacheArr.splice(i - 1, 1, this.finalResult.toString());
+          this.cacheArr.splice(i - 1, 1, miniResult.toString());
           this.CalcMulDiv();
         }
       }
@@ -110,24 +107,28 @@ export class AppComponent {
   }
 
   CalcAddSub(): void {
+    let preOperand = '';
+    let afterOperand = '';
+    let miniResult = 0;
+
     if (this.cacheArr.length >= 3) {
       for (var i = 0; i < this.cacheArr.length; i++) {
         if (this.cacheArr[i] === '+') {
-          this.a = parseFloat(this.cacheArr[i - 1]).toFixed(7);
-          this.b = parseFloat(this.cacheArr[i + 1]).toFixed(7);
-          this.add('=');
+          preOperand = parseFloat(this.cacheArr[i - 1]).toFixed(7);
+          afterOperand = parseFloat(this.cacheArr[i + 1]).toFixed(7);
+          miniResult = this.add(preOperand, afterOperand);
           this.cacheArr.splice(i + 1, 1);
           this.cacheArr.splice(i, 1);
-          this.cacheArr.splice(i - 1, 1, this.finalResult.toString());
+          this.cacheArr.splice(i - 1, 1, miniResult.toString());
           this.CalcAddSub();
         }
         else if (this.cacheArr[i] === '-') {
-          this.a = parseFloat(this.cacheArr[i - 1]).toFixed(7);
-          this.b = parseFloat(this.cacheArr[i + 1]).toFixed(7);
-          this.sub('=');
+          preOperand = parseFloat(this.cacheArr[i - 1]).toFixed(7);
+          afterOperand = parseFloat(this.cacheArr[i + 1]).toFixed(7);
+          miniResult = this.sub(preOperand, afterOperand);
           this.cacheArr.splice(i + 1, 1);
           this.cacheArr.splice(i, 1);
-          this.cacheArr.splice(i - 1, 1, this.finalResult.toString());
+          this.cacheArr.splice(i - 1, 1, miniResult.toString());
           this.CalcAddSub();
         }
       }
@@ -135,27 +136,25 @@ export class AppComponent {
     this.resultDis = this.cacheArr.join('');
     this.display = this.resultDis;
   }
-  /* Nicht mit Globalen Variablen arbeiten */
   //Wegen Rundung schauen 0,1 + 0,2
-  mul(multsymbol: any) {
-
-    this.finalResult = parseFloat(this.a) * parseFloat(this.b);
-    return this.finalResult;
+  mul(preOperand: string, afterOperand: string) {
+    let mulResult = parseFloat(preOperand) * parseFloat(afterOperand);
+    return mulResult;
   }
-  add(addsymbol: any) {
+  add(preOperand: string, afterOperand: string) {
 
-    this.finalResult = parseFloat(this.a) + parseFloat(this.b);
-    return this.finalResult;
+    let addResult = parseFloat(preOperand) + parseFloat(afterOperand);
+    return addResult;
   }
-  sub(subtsymbol: any) {
+  sub(preOperand: string, afterOperand: string) {
 
-    this.finalResult = parseFloat(this.a) - parseFloat(this.b);
-    return this.finalResult;
+    let subResult = parseFloat(preOperand) - parseFloat(afterOperand);
+    return subResult;
   }
-  div(divsymbol: any) {
+  div(preOperand: string, afterOperand: string) {
 
-    this.finalResult = parseFloat(this.a) / parseFloat(this.b);
-    return this.finalResult;
+    let divResult = parseFloat(preOperand) / parseFloat(afterOperand);
+    return divResult;
   }
 
   clear(): void {
