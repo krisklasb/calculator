@@ -3,39 +3,12 @@
 /* Jetzt gibt es z.B. Angular, wo man auch Komponentenweise CSS erstellt. Das ist besser, aber natürlich gibt es auch noch übergreifendes CSS. Siehe dafür https://angular.io/guide/component-styles, https://medium.com/@kmathy/angular-tips-and-tricks-for-css-structure-cb73fa50f0e8 (keine Ahnung ob das so roichtig ist, aber klingt gut) oder https://www.infoq.com/news/2019/12/components-css-architecture/ */
 /* Außerdem hat man jetzt mit SASS oder SCSS mehr Möglichkeiten. Im Zweifel würde ich reines CSS gar nicht mehr einsetzen. Siehe https://www.pluralsight.com/guides/use-sass-less-or-css-within-your-angular-component-template */
 
-/* Um es simpel und konkret zu machen, würde ich die CSS folgendermaßen aufbauen:
-
-Global, z.B. Font
-
-:host {}
-body {}
-
-Elemente, z.B. h1, h2 und ggf. ihre Ableitungen mit Klassen, z.B.:
-
-button {}
-button:hover {}
-button.clear {}
-...
-
-Komponenten, z.B. .display und alle Elemente dort drin
-
-.display {}
-.display .last {}
-.display .current {}
-.display button {} // z.B.
-
-*/
-
-
-/* Die beiden könnte man zusammenfassen. Außerdem würde ich versuchen Farben einheiltich mit Hex-Werten (z.B. #000000) darzustellen und  nicht zu mischen. */
-
 header {
-    background-color: var(--nav-color);
-    width: 100%;
-    height: 50px;
+    height: 7vh;
     display: flex;
     align-items: center;
     justify-content: space-around;
+    background-color: var(--nav-color);
 }
 
 .title {
@@ -45,7 +18,7 @@ header {
 /* Mach dich Mal schlau bei den Maßeinheiten. Du verwendest absolute (px) und relative Werte (vh, %). Tendenziell geht die Empfehlung hin zu relativen WErten, vor allem wg Responsive-Design. */
 
 main {
-    height: 93.41vh;
+    height: 93vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,16 +36,18 @@ button.theme {
 }
 
 button.theme:active {
-    box-shadow: 2px 2px 5px grey;
+    box-shadow: 2px 2px 5px #808080;
 }
 
 button {
-    width: 90px;
-    height: 70px;
-    background-color: var(--btn-bg-color);
-    color: var(--btn-txt-color);
+    /*  width: 90px; */
+    width: 12vh;
+    /* height: 70px; */
+    height: 9vh;
     font-size: 3vh;
     border: 1px solid var(--btn-border-color);
+    background-color: var(--btn-bg-color);
+    color: var(--btn-txt-color);
 }
 
 button:hover {
@@ -84,12 +59,14 @@ button:active {
 }
 
 button.clear {
-    width: 180px;
+    /* width: 180px; */
+    width: 24vh;
     border-top-left-radius: 10px;
 }
 
 button.delete {
-    width: 180px;
+    /* width: 180px; */
+    width: 24vh;
     border-top-right-radius: 10px;
 }
 
@@ -101,17 +78,27 @@ button.dot {
     border-bottom-left-radius: 10px;
 }
 
+.calculator {
+    border-radius: 25px;
+    /* width: 360px; */
+    width: 48vh;
+    background-color: var(--calc-color);
+    border: 20px solid var(--calc-color);
+}
+
 .display {
-    border-bottom: 20px solid var(--div-color);
+    border-bottom: 20px solid var(--calc-color);
 }
 
 .display div {
-    width: 358px;
-    height: 50px;
-    background-color: var(--disp-color);
-    color: var(--txt-color);
+    /* width: 358px; */
+    width: 48vh;
+    /* height: 50px; */
+    height: 8vh;
     display: flex;
     flex-direction: row-reverse;
+    background-color: var(--disp-color);
+    color: var(--txt-color);
 }
 
 .displayTop {
@@ -128,23 +115,15 @@ button.dot {
     border-top: none;
 }
 
-.calculator {
-    border: 20px solid var(--div-color);
-    border-radius: 25px;
-    width: 360px;
-    background-color: var(--div-color);
-
-}
-
 span.big {
-    font-size: 30px;
     font-weight: bold;
+    font-size: 30px;
     margin: 10px;
 }
 
 span.small {
-    font-size: 13px;
     font-weight: bold;
+    font-size: 13px;
     margin: 10px;
     margin-top: 20px;
 }

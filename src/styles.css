@@ -1,36 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    height: 100%;
-    width: 100%;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
-    padding: 0px;
 }
 
 body {
+    --bkg-color: #C4C4C4;
+    --txt-color: #000000;
+    --nav-color: #ffffff;
+    --calc-color: #363636;
+    --disp-color: #ffffff;
     --btn-hover: #c6c2ca;
-    --btn-click: grey;
-    --txt-color: black;
-    --nav-color: white;
-    --text-color: black;
-    --bkg-color: rgb(196, 196, 196);
-    --btn-txt-color: black;
+    --btn-click: #808080;
+    --btn-txt-color: #000000;
     --btn-bg-color: #e6e3e8;
-    --div-color: rgb(54, 54, 54);
-    --btn-border-color: black;
-    --disp-color: white;
+    --btn-border-color: #000000;
 }
 
 body.dark-theme {
-    --btn-hover: #212121;
-    --btn-click: black;
-    --txt-color: white;
-    --nav-color: black;
-    --text-color: #eee;
     --bkg-color: #212121;
-    --btn-txt-color: white;
-    --btn-bg-color: #424242;
-    --div-color: #303030;
-    --btn-border-color: #303030;
+    --txt-color: #ffffff;
+    --nav-color: #000000;
+    --calc-color: #303030;
     --disp-color: #484848;
+    --btn-hover: #212121;
+    --btn-click: #000000;
+    --btn-txt-color: #ffffff;
+    --btn-bg-color: #424242;
+    --btn-border-color: #303030;
 }
