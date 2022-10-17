@@ -26,28 +26,36 @@ main {
 }
 
 button.theme {
-    width: 60px;
-    height: 35px;
-    font-size: 12px;
-    border-radius: 10px;
+    width: 22px;
+    height: 22px;
+    font-size: 23px;
     font-weight: bold;
-    background-color: var(--btn-bg-color);
-    border-color: var(--btn-border-color);
+    border: var(--nav-color);
+    border-radius: 100%;
+    background-color: var(--nav-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button.theme:active {
     box-shadow: 2px 2px 5px #808080;
 }
 
+button.theme:hover {
+    background-color: var(--nav-color);
+}
+
 button {
-    /*  width: 90px; */
-    width: 12vh;
-    /* height: 70px; */
-    height: 9vh;
+    width: 90px;
+    /* width: 12vh; */
+    height: 70px;
+    /* height: 9vh; */
     font-size: 3vh;
     border: 1px solid var(--btn-border-color);
     background-color: var(--btn-bg-color);
     color: var(--btn-txt-color);
+    font-family: inherit;
 }
 
 button:hover {
@@ -59,14 +67,14 @@ button:active {
 }
 
 button.clear {
-    /* width: 180px; */
-    width: 24vh;
+    width: 180px;
+    /* width: 24vh; */
     border-top-left-radius: 10px;
 }
 
 button.delete {
-    /* width: 180px; */
-    width: 24vh;
+    width: 180px;
+    /* width: 24vh; */
     border-top-right-radius: 10px;
 }
 
@@ -80,8 +88,8 @@ button.dot {
 
 .calculator {
     border-radius: 25px;
-    /* width: 360px; */
-    width: 48vh;
+    width: 360px;
+    /* width: 48vh; */
     background-color: var(--calc-color);
     border: 20px solid var(--calc-color);
 }
@@ -91,14 +99,17 @@ button.dot {
 }
 
 .display div {
-    /* width: 358px; */
-    width: 48vh;
-    /* height: 50px; */
-    height: 8vh;
+    width: 358px;
+    /* width: 48vh; */
+    min-height: 56px;
+
+    /* height: 8vh; */
     display: flex;
     flex-direction: row-reverse;
     background-color: var(--disp-color);
     color: var(--txt-color);
+    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .displayTop {

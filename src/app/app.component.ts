@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
   title = 'Calculator';
-  myName = 'Kristian';
   display = '';
   saveNum = '';
   cache = '';
@@ -16,23 +15,28 @@ export class AppComponent {
   storeArray: string[] = [];
   finalResult = '';
 
+
   // Außerdem ist das schwer zu testen mit Unit-Tests, weil die Methode so groß ist und so viele Möglichkeiten hat, durchlaufen zu werden (zyklomatische Komplexität).
 
   input(input: any): void {
-
-    let addSymbol: string[] = ['+'];
-    let subSymbol: string[] = ['-'];
-    let mulSymbol: string[] = ['*'];
-    let divSymbol: string[] = ['/'];
-
+    let addSymbol = "+";
+    let subSymbol = "-";
+    let divSymbol = "/";
+    let mulSymbol = "*";
     if (input !== '-' && input !== '+' && input !== '/' && input !== '*') {
       this.saveNum = this.saveNum + input;
       this.display = this.saveNum;
     }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum === '' && this.finalResult === '') {
+    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum === '' && this.finalResult === '' && (this.storeArray.slice(-1).toString() !== subSymbol && this.storeArray.slice(-1).toString() !== addSymbol && this.storeArray.slice(-1).toString() !== divSymbol && this.storeArray.slice(-1).toString() !== mulSymbol)) {
       this.storeArray = this.storeArray.concat('0');
       this.storeArray = this.storeArray.concat(input);
       this.cache = input;
+      this.displaySmall = this.cache;
+    }
+    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum === '' && this.finalResult === '' && (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol)) {
+      /* this.storeArray = this.storeArray.concat(input); */
+      this.validation(input);
+      /* this.cache = this.cache + input; */
       this.displaySmall = this.cache;
     }
     else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum !== '' && this.finalResult === '') {
@@ -43,18 +47,19 @@ export class AppComponent {
       this.displaySmall = this.cache
     }
     else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.finalResult !== '' && this.saveNum === '') {
-      this.storeArray = this.storeArray.concat(input);
-      this.cache = this.finalResult + input;
+      /* this.storeArray = this.storeArray.concat(input); */
+      this.validation(input);
+      /* this.cache = this.finalResult + input; */
       this.displaySmall = this.cache;
     }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.finalResult !== '' && this.saveNum !== '' && (this.storeArray.slice(-1) === subSymbol || this.storeArray.slice(-1) === addSymbol || this.storeArray.slice(-1) === divSymbol || this.storeArray.slice(-1) === mulSymbol)) {
+    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.finalResult !== '' && this.saveNum !== '' && (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol)) {
       this.storeArray = this.storeArray.concat(this.saveNum);
       this.storeArray = this.storeArray.concat(input);
       this.cache = this.storeArray.join('');
       this.displaySmall = this.cache;
       this.saveNum = '';
     }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.finalResult !== '' && this.saveNum !== '' && (this.storeArray.slice(-1) !== subSymbol || this.storeArray.slice(-1) !== addSymbol || this.storeArray.slice(-1) !== divSymbol || this.storeArray.slice(-1) !== mulSymbol)) {
+    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.finalResult !== '' && this.saveNum !== '' && (this.storeArray.slice(-1).toString() !== subSymbol || this.storeArray.slice(-1).toString() !== addSymbol || this.storeArray.slice(-1).toString() !== divSymbol || this.storeArray.slice(-1).toString() !== mulSymbol)) {
       this.storeArray = [];
       this.finalResult = '';
       this.storeArray = this.storeArray.concat(this.saveNum);
@@ -70,9 +75,11 @@ export class AppComponent {
     this.cache = this.cache + this.saveNum;
     this.saveNum = '';
     this.displaySmall = this.cache;
+    this.checkDoubleOperand();
     this.CalcMulDiv();
     this.CalcAddSub();
   }
+
   CalcMulDiv(): void {
     let preOperand = '';
     let afterOperand = '';
@@ -169,4 +176,46 @@ export class AppComponent {
   toggleDarkTheme(): void {
     document.body.classList.toggle('dark-theme');
   }
+  checkDoubleOperand(): void {
+    let addSymbol = "+";
+    let subSymbol = "-";
+    let divSymbol = "/";
+    let mulSymbol = "*";
+    let cacheArray: string[] = [];
+    if (this.storeArray.length >= 4) {
+      for (var i = 0; i < this.storeArray.length; i++) {
+        if (this.storeArray[i] === addSymbol || this.storeArray[i] === subSymbol || this.storeArray[i] === divSymbol || this.storeArray[i] === mulSymbol) {
+          if (this.storeArray[i + 1] === subSymbol) {
+            this.storeArray[i + 2] = this.storeArray[i + 1] + this.storeArray[i + 2];
+            this.storeArray.splice(i + 1, 1);
+          }
+        }
+      }
+    }
+  }
+  validation(input: string): void {
+    let addSymbol = "+";
+    let subSymbol = "-";
+    let divSymbol = "/";
+    let mulSymbol = "*";
+    if (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) {
+      if ((this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) && input === "-") {
+        this.storeArray = this.storeArray.concat(input);
+        this.cache = this.storeArray.join("");
+      }
+      if ((this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) && input !== "-") {
+        this.storeArray.splice(-1, 1, input);
+        this.cache = this.storeArray.join("");
+      }
+      if (this.storeArray.slice(-1).toString() === "+" && input === "-") {
+        this.storeArray.splice(-1, 1, input);
+        this.cache = this.storeArray.join("");
+      }
+    }
+    else {
+      this.storeArray = this.storeArray.concat(input);
+    }
+  }
+
 }
+
