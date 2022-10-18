@@ -34,9 +34,7 @@ export class AppComponent {
       this.displaySmall = this.cache;
     }
     else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum === '' && this.finalResult === '' && (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol)) {
-      /* this.storeArray = this.storeArray.concat(input); */
       this.validation(input);
-      /* this.cache = this.cache + input; */
       this.displaySmall = this.cache;
     }
     else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum !== '' && this.finalResult === '') {
@@ -47,9 +45,7 @@ export class AppComponent {
       this.displaySmall = this.cache
     }
     else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.finalResult !== '' && this.saveNum === '') {
-      /* this.storeArray = this.storeArray.concat(input); */
       this.validation(input);
-      /* this.cache = this.finalResult + input; */
       this.displaySmall = this.cache;
     }
     else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.finalResult !== '' && this.saveNum !== '' && (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol)) {
@@ -71,6 +67,7 @@ export class AppComponent {
   }
 
   result(): void {
+    let subSymbol = "-"
     this.storeArray = this.storeArray.concat(this.saveNum);
     this.cache = this.cache + this.saveNum;
     this.saveNum = '';

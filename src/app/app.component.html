@@ -40,5 +40,13 @@
     <button (click)="input('0')">0</button>
     <button (click)="result()">=</button>
     <button (click)="input('+')" class="plus">+</button>
+
+    <input type="text" (window:keydown.0)="input(0)" (window:keydown.1)="input(1)" (window:keydown.2)="input(2)"
+      (window:keydown.3)="input(3)" (window:keydown.4)="input(4)" (window:keydown.5)="input(5)"
+      (window:keydown.6)="input(6)" (window:keydown.7)="input(7)" (window:keydown.8)="input(8)"
+      (window:keydown.9)="input(9)" (window:keydown.enter)="result()" (window:keydown.backspace)=" delete()"
+      (window:keydown.escape)="clear()">
   </div>
 </main>
+<!-- (window:keydown.plus)="input(+)" (window:keydown.hyphen)="input(-)"
+(window:keydown.*)="input(*)" (window:keydown..)="input(.)" (window:keydown.Divide)="input(/)" -->
