@@ -14,7 +14,7 @@ export class AppComponent {
   displaySmall = '';
   storeArray: string[] = [];
   finalResult = '';
-  cache = '';
+  regex = /\+\-\*\//g;
 
   input(input: any): void {
     let addSymbol = "+";
@@ -64,21 +64,28 @@ export class AppComponent {
   }
 
   result(): void {
-    /* let addSymbol = "+";
+    let addSymbol = "+";
     let subSymbol = "-";
     let divSymbol = "/";
-    let mulSymbol = "*"; */
+    let mulSymbol = "*";
     this.storeArray = this.storeArray.concat(this.saveNum);
     this.saveNum = '';
     this.displaySmall = this.storeArray.join("");
-    /* if (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) {
+    if (this.storeArray.slice(-1).toString() === '') {
+      this.storeArray.splice(-1, 1);
       this.display = this.storeArray.join("");
+      if (this.finalResult === "") {
+        this.displaySmall = "Ans=0"
+      }
+      else if (this.finalResult !== "") {
+        this.displaySmall = "Ans=" + this.finalResult;
+      }
     }
-    else { */
-    this.checkDoubleOperand();
-    this.CalcMulDiv();
-    this.CalcAddSub();
-    /* } */
+    else {
+      this.checkDoubleOperand();
+      this.CalcMulDiv();
+      this.CalcAddSub();
+    }
   }
 
   CalcMulDiv(): void {
@@ -167,7 +174,7 @@ export class AppComponent {
       if ((this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) && input === "-") {
         this.storeArray = this.storeArray.concat(input);
       }
-      if ((this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) && input !== "-") {
+      if ((this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) && input !== "-" && (this.storeArray.slice(-2, -1).toString() !== mulSymbol && this.storeArray.slice(-2, -1).toString() !== divSymbol)) {
         this.storeArray.splice(-1, 1, input);
       }
       if (this.storeArray.slice(-1).toString() === "+" && input === "-") {
