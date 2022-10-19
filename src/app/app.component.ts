@@ -14,15 +14,13 @@ export class AppComponent {
   displaySmall = '';
   storeArray: string[] = [];
   finalResult = '';
-  regex = /\+\-\*\//g;
+  regex = /\+|-|\*|\//;
+
 
   input(input: any): void {
-    let addSymbol = "+";
-    let subSymbol = "-";
-    let divSymbol = "/";
-    let mulSymbol = "*";
-    if (input !== '-' && input !== '+' && input !== '/' && input !== '*') {
-      if (this.storeArray.slice(-1).toString() !== addSymbol && this.storeArray.slice(-1).toString() !== subSymbol && this.storeArray.slice(-1).toString() !== mulSymbol && this.storeArray.slice(-1).toString() !== divSymbol && this.finalResult !== '') {
+    let lastValueOfArray = this.storeArray.slice(-1).toString();
+    if (this.regex.test(input) === false) {
+      if (this.finalResult !== "" && this.regex.test(lastValueOfArray) === false) {
         this.storeArray = [];
         this.displaySmall = "Ans=" + this.finalResult;
         this.finalResult = '';
@@ -34,40 +32,38 @@ export class AppComponent {
         this.display = this.storeArray.join("") + this.saveNum.split(",");
       }
     }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum === '' && this.finalResult === '' && (this.storeArray.slice(-1).toString() !== subSymbol && this.storeArray.slice(-1).toString() !== addSymbol && this.storeArray.slice(-1).toString() !== divSymbol && this.storeArray.slice(-1).toString() !== mulSymbol)) {
-      this.storeArray = this.storeArray.concat('0');
-      this.storeArray = this.storeArray.concat(input);
-      this.display = this.storeArray.join("");
-    }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum === '' && this.finalResult === '' && (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol)) {
-      this.validation(input);
-      this.display = this.storeArray.join("");
-    }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum !== '' && this.finalResult === '') {
-      this.storeArray = this.storeArray.concat(this.saveNum);
-      this.storeArray = this.storeArray.concat(input);
-      this.saveNum = '';
-      this.display = this.storeArray.join("");
-    }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum === '' && this.finalResult !== '') {
-      this.validation(input);
-      this.display = this.storeArray.join("");
-      this.displaySmall = "Ans=" + this.finalResult;
-    }
-    else if ((input === '-' || input === '+' || input === '/' || input === '*') && this.saveNum !== '' && this.finalResult !== '' && (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol)) {
-      this.storeArray = this.storeArray.concat(this.saveNum);
-      this.storeArray = this.storeArray.concat(input);
-      this.saveNum = '';
-      this.display = this.storeArray.join("");
-      this.displaySmall = "Ans=" + this.finalResult;
+    else if (this.regex.test(input) === true) {
+      if (this.saveNum === '' && this.finalResult === '' && this.regex.test(lastValueOfArray) === false) {
+        this.storeArray = this.storeArray.concat('0');
+        this.storeArray = this.storeArray.concat(input);
+        this.display = this.storeArray.join("");
+      }
+      else if (this.saveNum === '' && this.finalResult === '' && this.regex.test(lastValueOfArray) === true) {
+        this.validation(input);
+        this.display = this.storeArray.join("");
+      }
+      else if (this.saveNum !== '' && this.finalResult === '') {
+        this.storeArray = this.storeArray.concat(this.saveNum);
+        this.storeArray = this.storeArray.concat(input);
+        this.saveNum = '';
+        this.display = this.storeArray.join("");
+      }
+      else if (this.saveNum === '' && this.finalResult !== '') {
+        this.validation(input);
+        this.display = this.storeArray.join("");
+        this.displaySmall = "Ans=" + this.finalResult;
+      }
+      else if (this.saveNum !== '' && this.finalResult !== '' && this.regex.test(lastValueOfArray) === true) {
+        this.storeArray = this.storeArray.concat(this.saveNum);
+        this.storeArray = this.storeArray.concat(input);
+        this.saveNum = '';
+        this.display = this.storeArray.join("");
+        this.displaySmall = "Ans=" + this.finalResult;
+      }
     }
   }
 
   result(): void {
-    let addSymbol = "+";
-    let subSymbol = "-";
-    let divSymbol = "/";
-    let mulSymbol = "*";
     this.storeArray = this.storeArray.concat(this.saveNum);
     this.saveNum = '';
     this.displaySmall = this.storeArray.join("");
@@ -148,15 +144,11 @@ export class AppComponent {
   }
 
   checkDoubleOperand(): void {
-    let addSymbol = "+";
-    let subSymbol = "-";
-    let divSymbol = "/";
-    let mulSymbol = "*";
     let cacheArray: string[] = [];
     if (this.storeArray.length >= 4) {
       for (var i = 0; i < this.storeArray.length; i++) {
-        if (this.storeArray[i] === addSymbol || this.storeArray[i] === subSymbol || this.storeArray[i] === divSymbol || this.storeArray[i] === mulSymbol) {
-          if (this.storeArray[i + 1] === subSymbol) {
+        if (this.storeArray[i] === "+" || this.storeArray[i] === "-" || this.storeArray[i] === "/" || this.storeArray[i] === "*") {
+          if (this.storeArray[i + 1] === "-") {
             this.storeArray[i + 2] = this.storeArray[i + 1] + this.storeArray[i + 2];
             this.storeArray.splice(i + 1, 1);
           }
@@ -166,18 +158,16 @@ export class AppComponent {
   }
 
   validation(input: string): void {
-    let addSymbol = "+";
-    let subSymbol = "-";
-    let divSymbol = "/";
-    let mulSymbol = "*";
-    if (this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) {
-      if ((this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) && input === "-") {
+    let lastValueOfArray = this.storeArray.slice(-1).toString();
+    let secondLastValueOfArray = this.storeArray.slice(-2, -1).toString();
+    if (this.regex.test(lastValueOfArray) === true) {
+      if ((lastValueOfArray === "/" || lastValueOfArray === "*") && input === "-") {
         this.storeArray = this.storeArray.concat(input);
       }
-      if ((this.storeArray.slice(-1).toString() === subSymbol || this.storeArray.slice(-1).toString() === addSymbol || this.storeArray.slice(-1).toString() === divSymbol || this.storeArray.slice(-1).toString() === mulSymbol) && input !== "-" && (this.storeArray.slice(-2, -1).toString() !== mulSymbol && this.storeArray.slice(-2, -1).toString() !== divSymbol)) {
+      if (this.regex.test(lastValueOfArray) === true && input !== "-" && this.regex.test(secondLastValueOfArray) === false) {
         this.storeArray.splice(-1, 1, input);
       }
-      if (this.storeArray.slice(-1).toString() === "+" && input === "-") {
+      if (lastValueOfArray === "+" && input === "-") {
         this.storeArray.splice(-1, 1, input);
       }
     }
