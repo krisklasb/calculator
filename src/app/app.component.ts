@@ -114,11 +114,15 @@ export class AppComponent {
     let lastValueOfArray = this.storeArray.slice(-1).toString()
     if (lastValueOfArray.slice(-1) === '.') {
       lastValueOfArray = lastValueOfArray.slice(0, 1);
-      this.storeArray = lastValueOfArray.split('')
+      this.storeArray = lastValueOfArray.split('');
     }
-    else if (lastValueOfArray.slice(0, 1) === '.') {
+    else if (lastValueOfArray.slice(0, 1) === '.' && lastValueOfArray.slice(-1) !== '0') {
       lastValueOfArray = '0' + lastValueOfArray;
-      this.storeArray = lastValueOfArray.split('')
+      this.storeArray = lastValueOfArray.split('');
+    }
+    else if (lastValueOfArray.slice(0, 1) === '.' && lastValueOfArray.slice(-1) == '0') {
+      lastValueOfArray = '0';
+      this.storeArray = lastValueOfArray.split('');
     }
   }
 
