@@ -15,8 +15,6 @@ header {
     color: var(--txt-color);
 }
 
-/* Mach dich Mal schlau bei den Maßeinheiten. Du verwendest absolute (px) und relative Werte (vh, %). Tendenziell geht die Empfehlung hin zu relativen WErten, vor allem wg Responsive-Design. */
-
 main {
     height: 93vh;
     display: flex;

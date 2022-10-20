@@ -19,13 +19,13 @@ body {
 
 body.dark-theme {
     --bkg-color: #212121;
-    --txt-color: #ffffff;
+    --txt-color: #dfdfdf;
     --nav-color: #000000;
     --calc-color: #303030;
     --disp-color: #484848;
     --btn-hover: #212121;
     --btn-click: #000000;
-    --btn-txt-color: #ffffff;
+    --btn-txt-color: #dfdfdf;
     --btn-bg-color: #424242;
     --btn-border-color: #303030;
 }
