@@ -98,6 +98,10 @@ export class AppComponent {
       this.display = 'Error'
       this.storeArray = [];
     }
+    else if (this.storeArray.slice(-1).toString() === '.' && this.regex.test(this.storeArray.slice(-2, -1).toString()) === true) {
+      this.display = 'Error'
+      this.storeArray = [];
+    }
     else {
       this.displaySmall = this.storeArray.join('') + '=';
       this.checkDoubleOperand();
