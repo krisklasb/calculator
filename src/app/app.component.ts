@@ -92,15 +92,8 @@ export class AppComponent {
 
 
   result(): void {
+    this.checkError();
     if (this.regex.test(this.storeArray.slice(-1).toString()) === true || this.storeArray.length === 0) {
-    }
-    else if ((this.storeArray[0] === '.' && this.storeArray[1] === undefined) || (this.storeArray[0] === '.' && this.regex.test(this.storeArray[1]) === true)) {
-      this.display = 'Error'
-      this.storeArray = [];
-    }
-    else if (this.storeArray.slice(-1).toString() === '.' && this.regex.test(this.storeArray.slice(-2, -1).toString()) === true) {
-      this.display = 'Error'
-      this.storeArray = [];
     }
     else {
       this.displaySmall = this.storeArray.join('') + '=';
@@ -119,6 +112,17 @@ export class AppComponent {
         this.display = this.finalResult;
         this.storeArray = [];
       }
+    }
+  }
+
+  checkError(): void {
+    if ((this.storeArray[0] === '.' && this.storeArray[1] === undefined) || (this.storeArray[0] === '.' && this.regex.test(this.storeArray[1]) === true)) {
+      this.display = 'Error'
+      this.storeArray = [];
+    }
+    else if (this.storeArray.slice(-1).toString() === '.' && this.regex.test(this.storeArray.slice(-2, -1).toString()) === true) {
+      this.display = 'Error'
+      this.storeArray = [];
     }
   }
 
