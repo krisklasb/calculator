@@ -10,13 +10,12 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
   title = 'Calculator';
-  display = '';
+  display = '0';
   displaySmall = '';
   storeArray: string[] = [];
   finalResult = '';
   regex = /\+|-|\*|\//;
   regexNumDot = /\.|0|1|2|3|4|5|6|7|8|9/;
-
 
   input(input: any): void {
     let lastValueOfArray = this.storeArray.slice(-1).toString();
@@ -31,12 +30,7 @@ export class AppComponent {
         this.storeArray = this.storeArray.concat(input);
         this.display = this.storeArray.join('');
       }
-      if (this.finalResult === '') {
-        this.displaySmall = 'Ans=' + '0';
-      }
-      else {
-        this.displaySmall = 'Ans=' + this.finalResult;
-      }
+      this.updateDisplay();
     }
     else if (this.regex.test(input) === true) {
       if (lastValueOfArray === '' && this.finalResult === '') {
@@ -56,6 +50,7 @@ export class AppComponent {
           this.display = this.storeArray.join('');
         }
       }
+      this.updateDisplay();
     }
     else if (input === '.') {
       for (var i = 0; i <= this.storeArray.length; i++) {
@@ -69,6 +64,7 @@ export class AppComponent {
           break;
         }
       }
+      this.updateDisplay();
     }
   }
 
@@ -85,12 +81,25 @@ export class AppComponent {
     }
   }
 
-
-  result(): void {
-    if (this.regex.test(this.storeArray.slice(-1).toString()) === true) {
+  updateDisplay(): void {
+    if (this.finalResult === '') {
+      this.displaySmall = 'Ans=' + '0';
     }
     else {
-      this.displaySmall = this.storeArray.join('');
+      this.displaySmall = 'Ans=' + this.finalResult;
+    }
+  }
+
+
+  result(): void {
+    if (this.regex.test(this.storeArray.slice(-1).toString()) === true || this.storeArray.length === 0) {
+    }
+    else if ((this.storeArray[0] === '.' && this.storeArray[1] === undefined) || (this.storeArray[0] === '.' && this.regex.test(this.storeArray[1]) === true)) {
+      this.display = 'Error'
+      this.storeArray = [];
+    }
+    else {
+      this.displaySmall = this.storeArray.join('') + '=';
       this.checkDoubleOperand();
       this.convertArrayForCalculation();
       if (this.storeArray.length >= 3) {
@@ -105,7 +114,6 @@ export class AppComponent {
         this.finalResult = this.storeArray.join('');
         this.display = this.finalResult;
         this.storeArray = [];
-
       }
     }
   }
