@@ -100,14 +100,14 @@ export class AppComponent {
       this.checkDoubleOperand();
       this.convertArrayForCalculation();
       if (this.storeArray.length >= 3) {
-        this.CalcMulDiv();
-        this.CalcAddSub();
+        this.calcMulDiv();
+        this.calcAddSub();
         this.finalResult = this.storeArray.join('');
         this.display = this.finalResult;
         this.storeArray = [];
       }
       else {
-        this.AddZero();
+        this.addZero();
         this.finalResult = this.storeArray.join('');
         this.display = this.finalResult;
         this.storeArray = [];
@@ -118,15 +118,17 @@ export class AppComponent {
   checkError(): void {
     if ((this.storeArray[0] === '.' && this.storeArray[1] === undefined) || (this.storeArray[0] === '.' && this.regex.test(this.storeArray[1]) === true)) {
       this.display = 'Error'
+      this.displaySmall = this.storeArray.join('') + '=';
       this.storeArray = [];
     }
     else if (this.storeArray.slice(-1).toString() === '.' && this.regex.test(this.storeArray.slice(-2, -1).toString()) === true) {
       this.display = 'Error'
+      this.displaySmall = this.storeArray.join('') + '=';
       this.storeArray = [];
     }
   }
 
-  AddZero(): void {
+  addZero(): void {
     let lastValueOfArray = this.storeArray.slice(-1).toString()
     if (lastValueOfArray.slice(-1) === '.') {
       lastValueOfArray = lastValueOfArray.slice(0, 1);
@@ -142,28 +144,28 @@ export class AppComponent {
     }
   }
 
-  CalcMulDiv(): void {
+  calcMulDiv(): void {
     for (var i = 0; i < this.storeArray.length; i++) {
       if (this.storeArray[i] === '/') {
-        this.Calculation(i);
-        this.CalcMulDiv();
+        this.calculation(i);
+        this.calcMulDiv();
       }
       else if (this.storeArray[i] === '*') {
-        this.Calculation(i);
-        this.CalcMulDiv();
+        this.calculation(i);
+        this.calcMulDiv();
       }
     }
   }
 
-  CalcAddSub(): void {
+  calcAddSub(): void {
     for (var i = 0; i < this.storeArray.length; i++) {
       if (this.storeArray[i] === '+') {
-        this.Calculation(i);
-        this.CalcAddSub();
+        this.calculation(i);
+        this.calcAddSub();
       }
       else if (this.storeArray[i] === '-') {
-        this.Calculation(i);
-        this.CalcAddSub();
+        this.calculation(i);
+        this.calcAddSub();
       }
     }
   }
@@ -209,7 +211,7 @@ export class AppComponent {
       }
     }
   }
-  Calculation(i: number): void {
+  calculation(i: number): void {
     let preOperand = '';
     let afterOperand = '';
     let miniResult = 0;
@@ -325,4 +327,3 @@ export class AppComponent {
     }
   }
 }
-
