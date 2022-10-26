@@ -18,6 +18,25 @@ export class AppComponent {
   regexNumDot = /\.|0|1|2|3|4|5|6|7|8|9/;
 
   input(input: any): void {
+    this.inputNumber(input);
+    this.inputOperator(input);
+    this.inputDot(input);
+  }
+
+  dotChecker(input: string) {
+    for (var i = this.storeArray.length; i >= 0; i--) {
+      if (this.regex.test(this.storeArray[i]) === true) {
+        this.storeArray = this.storeArray.concat(input);
+        this.display = this.storeArray.join('');
+        break;
+      }
+      else if (this.storeArray[i] === '.') {
+        break;
+      }
+    }
+  }
+
+  inputNumber(input: any): void {
     let lastValueOfArray = this.storeArray.slice(-1).toString();
     let secondLastValueOfArray = this.storeArray.slice(-2, -1).toString();
     if (this.regex.test(input) === false && input !== '.') {
@@ -32,7 +51,11 @@ export class AppComponent {
       }
       this.updateDisplay();
     }
-    else if (this.regex.test(input) === true) {
+  }
+
+  inputOperator(input: any): void {
+    let lastValueOfArray = this.storeArray.slice(-1).toString();
+    if (this.regex.test(input) === true) {
       if (lastValueOfArray === '' && this.finalResult === '') {
         this.storeArray = this.storeArray.concat('0');
         this.storeArray = this.storeArray.concat(input);
@@ -52,7 +75,10 @@ export class AppComponent {
       }
       this.updateDisplay();
     }
-    else if (input === '.') {
+  }
+
+  inputDot(input: any): void {
+    if (input === '.') {
       for (var i = 0; i <= this.storeArray.length; i++) {
         if (this.storeArray[i] === '.') {
           this.dotChecker(input);
@@ -65,19 +91,6 @@ export class AppComponent {
         }
       }
       this.updateDisplay();
-    }
-  }
-
-  dotChecker(input: string) {
-    for (var i = this.storeArray.length; i >= 0; i--) {
-      if (this.regex.test(this.storeArray[i]) === true) {
-        this.storeArray = this.storeArray.concat(input);
-        this.display = this.storeArray.join('');
-        break;
-      }
-      else if (this.storeArray[i] === '.') {
-        break;
-      }
     }
   }
 
@@ -111,6 +124,7 @@ export class AppComponent {
         this.finalResult = this.storeArray.join('');
         this.display = this.finalResult;
         this.storeArray = [];
+        console.log("lel")
       }
     }
   }
